@@ -1,0 +1,53 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <table>
+        <tr th:each="role : ${roles}">
+            <td th:text="${role.role_id}">
+            </td>
+        </tr>
+    </table>
+</body>
+</html>-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="${title} ?: 'Roles List'"> Roles List </title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<section layout:fragment="content">
+    <h1>Roles List</h1>
+    <div>
+    <a th:href="@{/roles/new}" class="btn btn-primary mb-3">Add New
+        Role</a>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="role : ${roles}">
+            <td th:text="${role.role_id}"></td>
+            <td th:text="${role.role_name}"></td>
+            <td>
+                <a th:href="@{/roles/edit/{id}(id=${role.role_id})}" class="btn btn-success btn-sm">Edit</a>
+                <a th:href="@{/roles/delete/{id}(id=${role.role_id})}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+</body>
+</html>
