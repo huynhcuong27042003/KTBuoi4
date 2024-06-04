@@ -1,6 +1,7 @@
 package com.example.kt.Controller;
 
 import com.example.kt.RequestEntities.RoleCreate;
+import com.example.kt.RequestEntities.RoleUpdate;
 import org.springframework.ui.Model;
 import com.example.kt.Service.RoleService;
 import com.example.kt.model.Role;
@@ -35,9 +36,19 @@ public class RoleController {
         return "redirect:/roles";
     }
     @GetMapping("/edit/{id}")
-    public String editClassroom(Model model, @PathVariable String id) {
+    public String editRole(Model model, @PathVariable String id) {
         Role role = roleService.getRoleById(id);
         model.addAttribute("role", role);
-        return "roles/update-role";
+        return "roles/update_role";
+    }
+    @PostMapping("/saveedit")
+    public String saveRoleEdit(RoleUpdate roleUpdate) {
+        roleService.updateRole(roleUpdate);
+        return "redirect:/roles";
+    }
+    @GetMapping("/delete/{id}")
+    public String deleteRole(@PathVariable String id){
+        roleService.deleteRole(id);
+        return "redirect:/roles";
     }
 }

@@ -5,14 +5,12 @@ import com.example.kt.model.Role;
 import com.example.kt.model.User;
 import com.example.kt.RequestEntities.UserCreate;
 import com.example.kt.RequestEntities.UserUpdate;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -45,7 +43,8 @@ public class UserService {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             user.setDateOfBirth(dateFormat.parse(userCreate.getDateOfBirth()));
             user.setIsDelete(false);
-            user.setRole(userCreate.getRole());
+            Role role = roleService.getRoleById(userCreate.getRole().getRole_id());
+            user.setRole(role);  // Set only the Role object
             userRepository.save(user);
             return user;
         } catch (Exception e) {
@@ -57,7 +56,6 @@ public class UserService {
         try {
             User user = getUserById(userUpdate.getId());
             user.setUsername(userUpdate.getUsername());
-            user.setPassword(userUpdate.getPassword());
             user.setFirstName(userUpdate.getFirstName());
             user.setLastName(userUpdate.getLastName());
             user.setEmail(userUpdate.getEmail());
@@ -70,9 +68,9 @@ public class UserService {
             throw new RuntimeException(e.getMessage());
         }
     }
-    public User deleteUser(UserUpdate userUpdate) {
+    public User deleteUser(User userDelete) {
         try {
-            User user = getUserById(userUpdate.getId());
+            User user = getUserById(userDelete.getId());
             user.setIsDelete(true);
             userRepository.save(user);
             return user;

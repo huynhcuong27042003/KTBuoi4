@@ -18,5 +18,4 @@ public class UserCreate {
     private String email;
     private String dateOfBirth;
     private Role role ;
-
 }

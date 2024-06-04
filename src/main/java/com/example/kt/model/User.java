@@ -33,5 +33,4 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "role")
     private Role role;
-
 }
